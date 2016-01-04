@@ -9,7 +9,6 @@ ALT y
 DELAY 500
 ENTER
 ENTER
-REM -------------download appropriate mimikatz for architecture
 STRING powershell  
 ENTER
 DELAY 500
